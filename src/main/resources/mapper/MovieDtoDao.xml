@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.MovieDtoDao">
+    <select id="selectMovieInfoByType" resultType="entity.MovieDto">
+        select m.mid as mid,m.title as title,m.introduction as introduction,m.rating as rating,
+        m.releasedate as releasedate,g.gname as type,p.name as actor
+        from movie as m join movie_to_genre as mtg on m.mid=mtg.mid
+        join genre as g on g.gid = mtg.gid and g.gname = #{type}
+        join person_to_movie as ptm on ptm.mid=m.mid
+        join person as p on p.pid=ptm.pid GROUP BY m.mid limit #{begin},#{num};
+    </select>
+    <select id="countMovieByType" resultType="Integer">
+        select m.mid
+        from movie as m join movie_to_genre as mtg on m.mid=mtg.mid
+        join genre as g on g.gid = mtg.gid and g.gname = #{type}
+        join person_to_movie as ptm on ptm.mid=m.mid
+        join person as p on p.pid=ptm.pid GROUP BY m.mid;
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.MovieDao">
+    <select id="selectMovieByMid" resultType="entity.Movie">
+        select * from movie where mid = #{mid};
+    </select>
+    <select id="selectMovieByGenre">
+        select g.gname from genre as g inner join movie_to_genre as mtg on mtg.mid = #{mid} and g.gid = mtg.gid;
+    </select>
+    <insert id="insertMovie">
+        insert into movie(mid,title,introduction,rating,releasedate)
+        values (#{mid},#{title},#{introduction},#{rating},#{releasedate});
+    </insert>
+    <update id="updateMovie">
+        update movie set title = #{title}, introduction = #{introduction}, rating = #{rating},
+        releasedate = #{releasedate} where mid = #{mid};
+    </update>
+    <delete id="deleteMovie">
+        delete from movie where mid = #{mid};
+    </delete>
+    <select id="listMovie" resultType="entity.Movie">
+        select * from movie limit #{begin},#{begin}+4;
+    </select>
+    <select id="listAllMovie" resultType="entity.Movie">
+        select * from movie;
+    </select>
+    <select id="countMovie" resultType="Integer">
+        select count(*) from movie;
+    </select>
+    <select id="listMovieByLimit" resultType="entity.Movie">
+        select * from movie limit #{begin},#{end};
+    </select>
+    <select id="searchMovieByName" resultType="entity.Movie">
+        select * from movie where movie.title like #{s};
+    </select>
+    <select id="maxMovieId" resultType="Integer">
+        select max(mid) from movie;
+    </select>
+</mapper>

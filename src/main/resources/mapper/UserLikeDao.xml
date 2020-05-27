@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserLikeDao">
+    <insert id="insertUserLike">
+        insert into user_movie(uid,mid,title) values (#{uid},#{mid},#{title});
+    </insert>
+    <select id="listAllUserLikeUserId" resultType="entity.UserLike">
+        select * from user_movie where uid=#{uid};
+    </select>
+    <select id="selectUserLikeByUidMid" resultType="entity.UserLike">
+        select * from user_movie where uid=#{uid} and mid=#{mid} ;
+    </select>
+    <delete id="deleteUserLike">
+        delete from user_movie where uid=#{uid} and mid=#{mid} ;
+    </delete>
+</mapper>

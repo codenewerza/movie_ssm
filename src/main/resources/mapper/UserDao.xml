@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserDao">
+    <select id="selectUserByUserId" resultType="entity.User">
+        select * from user where userid = #{userid};
+    </select>
+    <insert id="insertUser" >
+        insert ignore into user(userid,username,password)
+        values (#{userid},#{username},#{password})
+    </insert>
+    <select id="listUser" resultType="entity.User">
+        select * from user limit #{begin},#{end} ;
+    </select>
+    <select id="listAllUser" resultType="entity.User">
+        select * from user;
+    </select>
+    <delete id="deleteUserByUserId">
+        delete from user where userid=#{userid};
+    </delete>
+    <update id="updateUser" >
+        update user set password = #{password}, phone = #{phone}, sex = #{sex}, email = #{email}
+        where userid = #{userid};
+    </update>
+    <select id="selectMaxId" resultType="Integer">
+        select max(userid) from user;
+    </select>
+    <select id="selectUserByName" resultType="entity.User">
+        select * from user where username = #{username};
+    </select>
+    <select id="getUserCount" resultType="Integer">
+        select count(*) from user;
+    </select>
+</mapper>
